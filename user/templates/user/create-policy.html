@@ -1,1 +1,13 @@
-<h1>this is creating </h1>
+<!-- <h1>this is creating </h1>
+ -->
+ {% extends 'user/base.html' %}
+ {% load bootstrap4 %}
+ {% block content %}
+ <h1>Create Policy</h1>
+ <form action="" method="POST">
+     {% csrf_token %}
+     {% bootstrap_form form %}
+     <input type="submit" class="btn btn-primary" value="submit">
+ </form>
+ {% endblock %}
+ 

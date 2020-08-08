@@ -22,7 +22,7 @@ class UserUpdateForm(forms.ModelForm):
 class Feedback(ModelForm):
 	class Meta:
 		model = Answer
-		fields=['answer','age','gender','region']
+		fields=['answer','comment_language','comment','age','gender','region']
 
 class CreatePolicy(ModelForm):
 	class Meta:
