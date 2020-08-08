@@ -8,7 +8,7 @@
     margin-right: 20px;
   }
 </style>
-<img src="{% static 'images/logo.png' %}">
+<img src="{% static 'images/civis.png' %}">
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -26,7 +26,7 @@
         <a class="nav-link" href="{% url 'detail' %}">Dashboard</a>
       </li> 
       <li class="nav-item">
-        <a class="nav-link" href="">Polices </a>
+        <a class="nav-link" href="{% url 'policys' %}">Polices </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="">Feedback Overview</a>
@@ -39,13 +39,16 @@
         <a class="nav-link" href="{% url 'policys' %}">Polices </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">Feedback </a>
+        <a class="nav-link" href="{% url 'feedbackForm' %}">Feedback </a>
       </li>
+      
       {% endif %}
     </ul>
   </div>
-
+  {% if request.user.is_authenticated %}
   <span class="hello-msg">Hello, {{request.user}}</span>
   <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
-
+  {% else %}
+  <span ><a  class="hello-msg" href="{% url 'login' %}">login</a></span>
+  {% endif %}
 </nav>

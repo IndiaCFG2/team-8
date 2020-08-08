@@ -25,6 +25,7 @@ urlpatterns = [
     path('user/', views.userPage, name="user-page"),
     path('detail/', views.detail, name="detail"),
     path('policys/', views.policys, name="policys"),
+    path('feedback/', views.feedbackForm, name="feedbackForm"),
     
     
 ]
