@@ -24,6 +24,6 @@ def analysis_text(text):
 
 def summarize_text(text):
     model = Summarizer()
-    result = model(body, min_length=60, ratio=0.1)
+    result = model(text, min_length=60, ratio=0.1)
     full = ''.join(result)
     return full
