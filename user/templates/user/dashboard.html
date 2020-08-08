@@ -1,0 +1,7 @@
+{% extends 'user/base.html' %}
+
+{% block content %} 
+
+    <h1>Logged in as {{user}}-admin</h1>
+    <a href="{% url 'create_policy' %}" class="btn btn-success">Create Policy</a>
+{% endblock %}

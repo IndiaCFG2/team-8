@@ -1,0 +1,16 @@
+{% extends 'user/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+	<!-- {{form}} -->
+	<div class="content-section">
+        <h2>You Have Been Logged Out!</h2>
+        <div class="border-top pt-3">
+                <small class="text-muted">
+                    Wanna Get Back Again? <a class="ml-2" href="{% url 'login' %}">Log In</a>
+                </small>
+        </div>
+		
+	</div>
+	
+
+{% endblock %}
