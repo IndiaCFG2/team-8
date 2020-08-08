@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
 from .forms import CreateUserForm
-
+from . models import *
 @login_required(login_url='login')
 @admin_only
 def detail(request):
@@ -64,3 +64,10 @@ def userPage(request):
 def home(request):
     context={}
     return render(request,'authentication/detail.html',context)
+
+@login_required(login_url='login')
+def policys(request):
+    policys = Policy.objects.all()
+    total_policys = policys.count()
+    context={'policys':policys}
+    return render(request,'authentication/policys.html',context)
