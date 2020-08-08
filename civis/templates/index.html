@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+ <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="hero-text">
+                        <h1>Civis,The local body</h1>
+                        <p>Start exercising your rights and voice out your opinions. Every single opinion matters. So let's get it.</p>
+                        <a href="#" class="primary-btn">Discover Now</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
+                    <div class="booking-form">
+                        <h3>Haven't registered yet? Then hurry up to voice your opinion</h3>
+                        <form action="#">
+                            
+                            <button type="submit">REGISTER</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-slider owl-carousel">
+            <div class="hs-item set-bg" data-setbg="{% static 'images/hero-1.jpg' %}"></div>
+            
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Us Section Begin -->
+    <section class="aboutus-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="about-text">
+                        <div class="section-title">
+                            <span>About Us</span>
+                            
+                        </div>
+                        <p class="f-para">In India, you are the superhero of the country, and the guardian of our destiny.
+The process where you share feedback with the government on how a policy may impact you and your community, is known as a public consultation. Our organisation reviews the opinion of the public on a particular policy that the government wants to implement so that it can be carry forwardeed successfully.</p>
+                        <p class="s-para">As a responsible citizen of the society, we encourage the users to give their opinions which would result a good impact on the society.</p>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="about-pic">
+                        <div class="row">
+                            <img src="{% static 'images/about-1.jpg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Us Section End -->
+
+    <!-- top responses-->
+    <div class="container">
+        <h4 class="text-center" style="padding-top: 50px;color: orangered;padding-bottom: 50px;">TOP RESPONSES</h4>
+        <div class="row" style="margin-bottom:80px;">
+            <div class="col-lg-2 col-6">
+                <figure class="text-center">
+                    <img src="{% static 'images/display.png' %}" style="width: 75px;height: 75px;border-radius: 50%;">
+                    <figcaption class="text-center" style="font-size: medium;">Apurva</figcaption>
+                </figure>
+                
+            </div>
+            <div class="col-lg-2 col-6">
+                <figure class="text-center">
+                    <img src="{% static 'images/display.png' %}" style="width: 75px;height: 75px;border-radius: 50%;">
+                    <figcaption class="text-center" style="font-size: medium;">Deeksha</figcaption>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-6">
+                <figure class="text-center">
+                    <img src="{% static 'images/display.png' %}" style="width: 75px;height: 75px;border-radius: 50%;">
+                    <figcaption class="text-center" style="font-size: medium;">Bharadwaj</figcaption>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-6">
+                <figure class="text-center">
+                    <img src="{% static 'images/display.png' %}" style="width: 75px;height: 75px;border-radius: 50%;">
+                    <figcaption class="text-center" style="font-size: medium;">Hruday</figcaption>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-6">
+                <figure class="text-center">
+                    <img src="{% static 'images/display.png' %}" style="width: 75px;height: 75px;border-radius: 50%;">
+                    <figcaption class="text-center" style="font-size: medium;">Sankeerth</figcaption>
+                </figure>
+            </div>
+            <div class="col-lg-2 col-6">
+                <figure class="text-center">
+                    <img src="{% static 'images/display.png' %}" style="width: 75px;height: 75px;border-radius: 50%;">
+                    <figcaption class="text-center" style="font-size: medium;">Deepthi</figcaption>
+                </figure>
+            </div>
+        </div>
+        <!-- end top responses-->
+
+    {% endblock %}
