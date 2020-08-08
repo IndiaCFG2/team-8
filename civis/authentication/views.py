@@ -81,3 +81,43 @@ def feedbackForm(request):
         'form': form
         }
     return render(request, "authentication/feedback.html", context)
+
+@login_required(login_url='login')
+def pie_chart(request):
+    labels = []
+    data = []
+
+    queryset = Feedback.objects.order_by('rating').distinct()[:13]
+    for feedback in queryset:
+        labels.append(feedback.gender)  
+        data.append(feedback.rating)
+   
+    context = {'labels': labels,
+        'data': data}
+    return render(request, 'authentication/pie_chart.html', context)
+
+def pie_chart1(request):
+    labels = []
+    data = []
+
+    queryset = Feedback.objects.order_by('rating').distinct()[:13]
+    for feedback in queryset:
+        labels.append(feedback.location)  
+        data.append(feedback.rating)
+   
+    context = {'labels': labels,
+        'data': data}
+    return render(request, 'authentication/pie_chart.html', context)
+
+def pie_chart2(request):
+    labels = []
+    data = []
+
+    queryset = Feedback.objects.order_by('rating').distinct()[:13]
+    for feedback in queryset:
+        labels.append(feedback.age)  
+        data.append(feedback.rating)
+   
+    context = {'labels': labels,
+        'data': data}
+    return render(request, 'authentication/pie_chart.html', context)

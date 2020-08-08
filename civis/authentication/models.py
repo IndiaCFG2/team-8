@@ -36,11 +36,14 @@ class Feedback(models.Model):
     location = models.CharField(max_length=20, choices=STATE_CHOICES,default='None')
     RATING_CHOICES = (
         ('3', '3'),
-        ('2', '3'),
+        ('2', '2'),
         ('1','1')
     )
     rating = models.CharField(max_length=2, choices=RATING_CHOICES,default='None')
  
     def __str__(self):
         return self.answer
+
+    class Meta:
+        db_table = "authentication_feedback"
 

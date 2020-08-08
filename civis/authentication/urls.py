@@ -24,6 +24,9 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('user/', views.userPage, name="user-page"),
     path('detail/', views.detail, name="detail"),
+    path('pie_chart/', views.pie_chart, name="pie_chart"),
+    path('pie_chart1/', views.pie_chart1, name="pie_chart1"),
+    path('pie_chart2/', views.pie_chart2, name="pie_chart2"),
     path('policys/', views.policys, name="policys"),
     path('feedback/', views.feedbackForm, name="feedbackForm"),
     
