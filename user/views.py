@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, Feedback, CreatePolicy
 from django.contrib.auth.decorators import login_required,user_passes_test
 from .models import Policy, Answer
+from googletrans import Translator
+from .utils import *
 
 # Create your views here.
 def register(request):
@@ -22,7 +24,7 @@ def home(request):
         return render(request,'user/dashboard.html',{'questions':Policy.objects.all()})
     else:
         return render(request,'user/home.html',{'questions':Policy.objects.all()})
-        
+
 def question_detail(request,ques_pk):
 	question = Policy.objects.filter(pk=ques_pk)[0]
 	if request.method == 'POST':
@@ -63,6 +65,7 @@ def create_policy(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_ques_detail(request,ques_pk):
+	translator = Translator()
 	# responses = Policy.objects.filter(answer__question_id=ques_pk)
 	question = Policy.objects.filter(pk=ques_pk)[0]
 	# policy = Policy.objects.filter(pk = ques_pk)[0]
@@ -77,8 +80,25 @@ def admin_ques_detail(request,ques_pk):
 	# male_no = 0
 	# female_yes = 0
 	# female_no = 0
-	# male_neutral = 0 
+	# male_neutral = 0
 	answers = Answer.objects.filter(question = question)
+	commentList = []
+	sentimentsList = []
+	for _ in answers:
+		if (_.comment_language == 'en'):
+			commentList.append(_.comment)
+		else:
+			result = translator.translate(_.comment, src=_.comment_language, dest='en')
+			commentList.append(result.text)
+	for i in commentList:
+		result1 = profanity_filter(i)
+		result2 = analysis_text(i)
+	corpus = "".join(commentList)
+	corpus = corpus.replace('\n', '')
+	corpus = corpus.replace('\r', '')
+	summary = summarize_text(corpus)
+	print(summary)
+
 	for i in answers:
 		if i.gender == 'male':
 			male +=1
@@ -88,4 +108,4 @@ def admin_ques_detail(request,ques_pk):
 			other +=1
 
 
-	return render(request,'user/admin-ques-detail.html',{'male':male,'female':female,'other':other})
+	return render(request,'user/test.html',{'male':male,'female':female,'other':other,'summary':summary,'question':question,'answers':answers})
