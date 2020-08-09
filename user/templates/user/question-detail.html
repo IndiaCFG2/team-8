@@ -9,8 +9,11 @@
     <input type="submit" class="btn btn-primary" value="submit">
 </form>
 <br>
-{% for answer in answers %}
-    {{answer}} <br>
-{% endfor %}
+<div class="w3-container">
+  {% for answer in answers %}
+  <p>{{answer}}</p>
+  <br>
+  {% endfor %}
+</div>
 <br>
 {% endblock %}

@@ -4,7 +4,6 @@ from googletrans import Translator
 filename = "hindi.wav"
 
 r = sr.Recognizer()
-translator = Translator()
 
 with sr.AudioFile(filename) as source:
     audio_data = r.record(source)

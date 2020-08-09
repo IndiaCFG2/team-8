@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, Feedback, CreatePolicy
 from django.contrib.auth.decorators import login_required,user_passes_test
 from .models import Policy, Answer
-# from googletrans import Translator
-# from .utils import *
+from googletrans import Translator
+from .utils import *
+import nltk
+from nltk.corpus import stopwords
+nltk.download('stopwords')
+from nltk.tokenize import word_tokenize
 
 # Create your views here.
 def register(request):
@@ -65,7 +69,7 @@ def create_policy(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_ques_detail(request,ques_pk):
-	# translator = Translator()
+	translator = Translator()
 	# responses = Policy.objects.filter(answer__question_id=ques_pk)
 	question = Policy.objects.filter(pk=ques_pk)[0]
 	# policy = Policy.objects.filter(pk = ques_pk)[0]
@@ -92,8 +96,32 @@ def admin_ques_detail(request,ques_pk):
 	yes=0
 	no=0
 	neutral=0
-	# male_neutral = 0 
+	# male_neutral = 0
 	responses = Answer.objects.filter(question = question)
+	answers = Answer.objects.filter(question = question)
+	print(responses)
+	commentList = []
+	sentimentsList = []
+	for _ in answers:
+		if (_.comment_language == 'en'):
+			commentList.append(_.comment)
+		else:
+			result = translator.translate(_.comment, src=_.comment_language, dest='en')
+			commentList.append(result.text)
+	for i in commentList:
+		result1 = profanity_filter(i)
+		# result2 = analysis_text(i)
+	corpus = "".join(commentList)
+	corpus = corpus.replace('\n', '')
+	corpus = corpus.replace('\r', '')
+	# print(corpus,commentList)
+	summary = summarize_text(corpus)
+	text_tokens = word_tokenize(corpus)
+	tokens_without_sw = [word for word in text_tokens if not word in stopwords.words()]
+	corpus = ''.join(tokens_without_sw)
+	print(summary)
+	# summary = "This is Bharadwaj Bharadwaj is this this isi is is this is"
+
 	for i in responses:
 		if i.answer == 'No':
 			no+=1
@@ -162,32 +190,13 @@ def admin_ques_detail(request,ques_pk):
 	data.append(no)
 	data.append(neutral)
 
-	summary = "hruday hruday hruday deepshika oehfohoewoufb hruday hruday"
-
-	return render(request,'user/admin-ques-detail.html',{'labels':labels,'data':data, 'labelsneutral':labelsneutral,'dataneutral':dataneutral,'labelsyes':labelsyes,'datayes':datayes,'labelsno':labelsno,'datano':datano,'question':question,'summary':summary})
+	return render(request,'user/admin-ques-detail.html',{'labels':labels,'data':data, 'labelsneutral':labelsneutral,'dataneutral':dataneutral,'labelsyes':labelsyes,'datayes':datayes,'labelsno':labelsno,'datano':datano,'question':question,'summary':summary, "corpus":corpus,'answers':answers})
 # =======
 # 	# male_yes = 0
 # 	# male_no = 0
 # 	# female_yes = 0
 # 	# female_no = 0
 # 	# male_neutral = 0
-# 	answers = Answer.objects.filter(question = question)
-# 	commentList = []
-# 	sentimentsList = []
-# 	for _ in answers:
-# 		if (_.comment_language == 'en'):
-# 			commentList.append(_.comment)
-# 		else:
-# 			result = translator.translate(_.comment, src=_.comment_language, dest='en')
-# 			commentList.append(result.text)
-# 	for i in commentList:
-# 		result1 = profanity_filter(i)
-# 		result2 = analysis_text(i)
-# 	corpus = "".join(commentList)
-# 	corpus = corpus.replace('\n', '')
-# 	corpus = corpus.replace('\r', '')
-# 	summary = summarize_text(corpus)
-# 	print(summary)
 
 # 	for i in answers:
 # 		if i.gender == 'male':

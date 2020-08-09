@@ -2,8 +2,10 @@
 {% block content %}
 
 
-    {{question}}
-    
+    <h1>{{ question.name }}</h1>
+    <p>{{ question.summary }}</p>
+    <br>
+
     {{labels}}
     {{data}}
 
@@ -34,7 +36,7 @@
                     <h5 class="text-center">Neutral</h5>
                 </div>
             </div>
-            
+
 
         </div>
 
@@ -44,9 +46,9 @@
 
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
-        <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
-        <!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
-        <!-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
         <figure class="highcharts-figure">
             <div id="container"></div>
@@ -54,8 +56,20 @@
     </div>
 
 
+
+    <header>
+      <h1>Summary</h1>
+    </header>
+    <p>{{ summary }}</p>
+
+<h1>All Feedbacks</h1>
+{% for answer in answers %}
+<p>{{ answer.content }}</p>
+    {{answer}} <br>
+{% endfor %}
+
       <script>
-          var text = "{{summary|safe }}";
+          var text = "{{ summary|safe }}";
             var lines = text.split(/[,\. ]+/g),
                 data = Highcharts.reduce(lines, function (arr, word) {
                     var obj = Highcharts.find(arr, function (obj) {
@@ -92,10 +106,10 @@
                 }
             });
       </script>
-    
+
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
       <script>
-    
+
         var config = {
           type: 'bar',
           data: {
@@ -136,7 +150,7 @@
             responsive: true,
           }
         };
-    
+
 
         var config2 = {
           type: 'pie',
@@ -185,6 +199,6 @@
           var ctx3 = document.getElementById('pie-chart3').getContext('2d');
           window.myPie = new Chart(ctx3, config2);
         };
-    
-      </script>    
+
+      </script>
 {% endblock %}
