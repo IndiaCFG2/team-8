@@ -1,0 +1,14 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+<h3>User Profile</h3>
+
+<h2>Questions</h2>
+
+{% for question in questions %}
+    <ul>
+        <a href="{% url 'question_detail' question.id %}"><li>{{question.name}}</li></a>
+    </ul>
+{% endfor %}
+
+{% endblock %}

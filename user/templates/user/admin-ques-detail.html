@@ -1,0 +1,204 @@
+{% extends 'user/base.html' %}
+{% block content %}
+
+
+    <h1>{{ question.name }}</h1>
+    <p>{{ question.summary }}</p>
+    <br>
+
+    {{labels}}
+    {{data}}
+
+    <div id="container text-center" style="width: 75%; margin-left: auto;margin-right: auto;">
+        <canvas id="pie-chart" class="text-center"></canvas>
+    </div>
+
+    <div class="container" style="margin-top: 130px;">
+
+        <div class="row align-items-center justify-content-middle">
+            <div class="col-md-6">
+                <div id="container text-center" style="width: 75%; margin-left: auto;margin-right: auto;">
+                    <canvas id="pie-chart1" class="text-center"></canvas>
+                    <h5 class="text-center">Yes</h5>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="container text-center" style="width: 75%; margin-left: auto;margin-right: auto;">
+                    <canvas id="pie-chart2" class="text-center"></canvas>
+                    <h5 class="text-center">No</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items justify-content-middle">
+            <div class="col-md-6" style="margin-left: auto;margin-right: auto;">
+                <div id="container text-center" style="width: 75%; margin-left: auto;margin-right: auto;">
+                    <canvas id="pie-chart3" class="text-center"></canvas>
+                    <h5 class="text-center">Neutral</h5>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="container" style="margin: 50px;">
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+        </figure>
+    </div>
+
+
+
+    <header>
+      <h1>Summary</h1>
+    </header>
+    <p>{{ summary }}</p>
+
+<h1>All Feedbacks</h1>
+{% for answer in answers %}
+<p>{{ answer.content }}</p>
+    {{answer}} <br>
+{% endfor %}
+
+      <script>
+          var text = "{{ summary|safe }}";
+            var lines = text.split(/[,\. ]+/g),
+                data = Highcharts.reduce(lines, function (arr, word) {
+                    var obj = Highcharts.find(arr, function (obj) {
+                        return obj.name === word;
+                    });
+                    if (obj) {
+                        obj.weight += 1;
+                    } else {
+                        obj = {
+                            name: word,
+                            weight: 1
+                        };
+                        arr.push(obj);
+                    }
+                    return arr;
+                }, []);
+
+            Highcharts.chart('container', {
+                accessibility: {
+                    screenReaderSection: {
+                        beforeChartFormat: '<h5>{chartTitle}</h5>' +
+                            '<div>{chartSubtitle}</div>' +
+                            '<div>{chartLongdesc}</div>' +
+                            '<div>{viewTableButton}</div>'
+                    }
+                },
+                series: [{
+                    type: 'wordcloud',
+                    data: data,
+                    name: 'Occurrences'
+                }],
+                title: {
+                    text: 'Wordcloud of Lorem Ipsum'
+                }
+            });
+      </script>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+      <script>
+
+        var config = {
+          type: 'bar',
+          data: {
+            datasets: [{
+              data: {{ data|safe }},
+              backgroundColor: [
+                '#ff0000','#00ff00','#0000ff',
+              ],
+              label: 'Votes '
+            }],
+            labels: {{ labels|safe }}
+          },
+          options: {
+            responsive: true,
+            scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+          }
+        };
+
+        var config1= {
+          type: 'pie',
+          data: {
+            datasets: [{
+              data: {{ datayes|safe }},
+              backgroundColor: [
+                '#79ee9c','#1c80bf','#be281d'
+              ],
+              label: 'Votes ',
+            }],
+            labels: {{ labelsyes|safe }}
+          },
+          options: {
+            responsive: true,
+          }
+        };
+
+
+        var config2 = {
+          type: 'pie',
+          data: {
+            datasets: [{
+              data: {{ datano|safe }},
+              backgroundColor: [
+                '#79ee9c','#1c80bf','#be281d'
+              ],
+              label: 'Votes ',
+            }],
+            labels: {{ labelsno|safe }}
+          },
+          options: {
+            responsive: true,
+          }
+        };
+
+
+        var config3 = {
+          type: 'pie',
+          data: {
+            datasets: [{
+              data: {{ dataneutral|safe }},
+              backgroundColor: [
+                '#79ee9c','#1c80bf','#be281d'
+              ],
+              label: 'Votes ',
+            }],
+            labels: {{ labelsneutral|safe }}
+          },
+          options: {
+            responsive: true,
+          }
+        };
+        window.onload = function() {
+          var ctx = document.getElementById('pie-chart').getContext('2d');
+          window.myPie = new Chart(ctx, config);
+
+          var ctx1 = document.getElementById('pie-chart1').getContext('2d');
+          window.myPie = new Chart(ctx1, config1);
+
+          var ctx2 = document.getElementById('pie-chart2').getContext('2d');
+          window.myPie = new Chart(ctx2, config2);
+
+          var ctx3 = document.getElementById('pie-chart3').getContext('2d');
+          window.myPie = new Chart(ctx3, config2);
+        };
+
+      </script>
+{% endblock %}

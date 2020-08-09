@@ -1,0 +1,19 @@
+{% extends 'user/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h1>{{ question.name }}</h1>
+<h1>{{ question.summary }}</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-primary" value="submit">
+</form>
+<br>
+<div class="w3-container">
+  {% for answer in answers %}
+  <p>{{answer}}</p>
+  <br>
+  {% endfor %}
+</div>
+<br>
+{% endblock %}

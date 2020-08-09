@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Civis Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css">
+  <style>
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    table.center {margin-left:auto; margin-right:auto;}
+    /* table, th, td {border: 1px solid black;} */
+  </style>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+</head>
+
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <div style="font-size:20px; padding-top: 5px;">
+    <span style="float: left; color: #0565ff; margin-left:50px;">CIVIS</span><span style="color: #76f5f1">ADMIN</span>
+    <!-- <span class="w3-bar-item w3-right"> <button style="color: #7e8b9e" type="button" name="login">Logout</button> </span> -->
+  </div>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-container" style="text-align: center; height:30px;">
+      <span class="w3-xlarge" style="display: inline-block;">Welcome, <strong>{{ user }}!</strong></span><br>
+    </div>
+  </div>
+  <hr>
+  <br>
+    <div class="w3-bar-block w3-padding">
+    <!-- <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a> -->
+    {% if user.is_authenticated %}
+    <a href="#dashboard-ref" class="w3-bar-item w3-button w3-padding"><i class="fa fa-desktop fa-fw"></i>  Home Page</a>
+    <a href="#images-ref" class="w3-bar-item w3-button w3-padding"><i class="fa   fa-file-image-o fa-fw"></i>  Feedback</a>
+    <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-desktop fa-fw"></i>  Logout</a>
+
+{% else %}
+<a href="{% url 'login' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-desktop fa-fw"></i>  Login</a>
+<a href="{% url 'register' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-desktop fa-fw"></i>  Register</a>
+{% endif %}
+  </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+<div class="container">
+  {% block content %}
+  {% endblock %}
+</div>
+</div>
+
+  <br>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+function search() {
+
+}
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-storage.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<!-- <script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="firebase.js"></script> -->
+
+</body>
+</html>
