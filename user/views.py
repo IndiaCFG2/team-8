@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, Feedback, CreatePolicy
 from django.contrib.auth.decorators import login_required,user_passes_test
 from .models import Policy, Answer
-from googletrans import Translator
-from .utils import *
+# from googletrans import Translator
+# from .utils import *
 
 # Create your views here.
 def register(request):
@@ -65,7 +65,7 @@ def create_policy(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_ques_detail(request,ques_pk):
-	translator = Translator()
+	# translator = Translator()
 	# responses = Policy.objects.filter(answer__question_id=ques_pk)
 	question = Policy.objects.filter(pk=ques_pk)[0]
 	# policy = Policy.objects.filter(pk = ques_pk)[0]
@@ -162,8 +162,9 @@ def admin_ques_detail(request,ques_pk):
 	data.append(no)
 	data.append(neutral)
 
+	summary = "hruday hruday hruday deepshika oehfohoewoufb hruday hruday"
 
-	return render(request,'user/admin-ques-detail.html',{'labels':labels,'data':data, 'labelsneutral':labelsneutral,'dataneutral':dataneutral,'labelsyes':labelsyes,'datayes':datayes,'labelsno':labelsno,'datano':datano,'question':question})
+	return render(request,'user/admin-ques-detail.html',{'labels':labels,'data':data, 'labelsneutral':labelsneutral,'dataneutral':dataneutral,'labelsyes':labelsyes,'datayes':datayes,'labelsno':labelsno,'datano':datano,'question':question,'summary':summary})
 # =======
 # 	# male_yes = 0
 # 	# male_no = 0

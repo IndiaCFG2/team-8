@@ -40,8 +40,58 @@
 
     </div>
 
+    <div class="container" style="margin: 50px;">
 
-      
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+        <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+        <!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
+        <!-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
+
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+        </figure>
+    </div>
+
+
+      <script>
+          var text = "{{summary|safe }}";
+            var lines = text.split(/[,\. ]+/g),
+                data = Highcharts.reduce(lines, function (arr, word) {
+                    var obj = Highcharts.find(arr, function (obj) {
+                        return obj.name === word;
+                    });
+                    if (obj) {
+                        obj.weight += 1;
+                    } else {
+                        obj = {
+                            name: word,
+                            weight: 1
+                        };
+                        arr.push(obj);
+                    }
+                    return arr;
+                }, []);
+
+            Highcharts.chart('container', {
+                accessibility: {
+                    screenReaderSection: {
+                        beforeChartFormat: '<h5>{chartTitle}</h5>' +
+                            '<div>{chartSubtitle}</div>' +
+                            '<div>{chartLongdesc}</div>' +
+                            '<div>{viewTableButton}</div>'
+                    }
+                },
+                series: [{
+                    type: 'wordcloud',
+                    data: data,
+                    name: 'Occurrences'
+                }],
+                title: {
+                    text: 'Wordcloud of Lorem Ipsum'
+                }
+            });
+      </script>
     
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
       <script>
